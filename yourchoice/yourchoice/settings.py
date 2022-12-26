@@ -43,8 +43,9 @@ ACCOUNT_ADAPTER = 'game.adapters.CustomAccountAdapter'
 
 REST_FRAMEWORK={
     'DEFAULT_AUTHENTICATION_CLASSES':(
-    'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
@@ -68,6 +69,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    'drf_spectacular',
 ]
 
 SITE_ID=1

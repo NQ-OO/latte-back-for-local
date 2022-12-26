@@ -17,17 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from rest_framework_swagger.views import get_swagger_view
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
-schema_view = get_swagger_view()
 
 urlpatterns = [
     path('',include('game.urls')),
-    path('swagger/', schema_view),
     path('admin/', admin.site.urls),
     path('dj-rest-auth/',include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration',include('dj_rest_auth.registration.urls')),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui", ),
     #path('rest-auth/',include('rest_auth.urls')),
     #path('rest-auth/registration/',include('rest_auth.registration.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
