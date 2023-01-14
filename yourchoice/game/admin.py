@@ -30,3 +30,5 @@ admin.site.register(Text_reader)
 admin.site.register(Face_reader)
 admin.site.register(Movie)
 admin.site.register(Blog)
+admin.site.register(CommentAndStar)
+

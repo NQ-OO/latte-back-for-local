@@ -28,9 +28,41 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
             
         return qs
 
+class BlogViewSet(viewsets.ModelViewSet):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+    
+    # def list(self,request):
+    #     user = request.user
+    #     user_obj = User.objects.get(id=1)
+    #     print("user :", user)
+    #     queryset = Blog.objects.filter(author = user_obj).order_by('-id')
+    
+    #     # queryset = Blog.objects.all()
+    #     serializer = BlogSerializer(queryset, many=True)
+        
+    #     return Response(serializer.data)
+
+
 class MovieViewSet(viewsets.ModelViewSet):
     queryset=Movie.objects.all()
     serializer_class=MovieSerializer
+
+
+    def list(self,request):
+        user = request.user
+        # user_obj = User.objects.get(id=user)
+        user_obj = User.objects.get(id=1)
+        user_is_evaluater = user_obj.is_evaluater
+        if user_is_evaluater == 0 : 
+            queryset = Movie.objects.filter(author = user_obj).order_by('-is_eval')
+        
+        else :
+            queryset = Movie.objects.all().order_by('is_eval')
+        
+        serializer = MovieSerializer(queryset, many=True)
+         
+        return Response(serializer.data)
 
     def create(self, request):
         serializer = MovieSerializer(data = request.data, many=True)
@@ -48,12 +80,9 @@ class MovieViewSet(viewsets.ModelViewSet):
         else:
             return HttpResponse(status=500)
 
+        
+    
 
-    def list(self,request):
-        queryset = Movie.objects.all()
-        serializer = MovieSerializer(queryset, many=True)
-         
-        return Response(serializer.data)
 
     def get_queryset(self):
         qs=super().get_queryset()
@@ -72,10 +101,12 @@ class SceneViewSet(viewsets.ModelViewSet):
     queryset = Scene.objects.all()
     serializer_class = SceneSerializer
 
-class BlogViewSet(viewsets.ModelViewSet):
-    queryset = Blog.objects.all()
-    serializer_class = BlogSerializer
 
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = CommentAndStar.objects.all()
+    serializer_class = CommentAndStarSerializer
+         
 class Text_readerViewSet(viewsets.ModelViewSet):
     queryset=Text_reader.objects.all()
     serializer_class = Text_readerSerializer
