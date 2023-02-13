@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-k0h*#yh*s**f=)de)6pkjy&=g^c^m8c4&t5j0y!j*+7s()qc3d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 AUTH_USER_MODEL='game.User'
